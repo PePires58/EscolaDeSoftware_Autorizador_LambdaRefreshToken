@@ -1,0 +1,6 @@
+{
+  "Parameters": {
+    "Environment": "prod",
+    "TokenTableName": "tbes_tokens"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "name": "escoladesoftware-autorizador-lambdarefreshtokenfn",
+  "version": "1.0.0",
+  "description": "contém uma lambda refresh token",
+  "repository": "https://github.com/PePires58/EscolaDeSoftware_Autorizador_LambdaRefreshToken",
+  "main": "app.js",
+  "scripts": {
+    "test": "mocha './specs/*.spec.js'"
+  },
+  "author": "PEDRO HENRIQUE PIRES - Escola de Software",
+  "license": "MIT",
+  "dependencies": {
+    "aws-sdk": "^2.1385.0",
+    "jsonwebtoken": "^9.0.0",
+    "mocha": "^10.1.0"
+  }
+}

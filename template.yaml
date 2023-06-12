@@ -1,0 +1,47 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: AWS::Serverless-2016-10-31
+Description: Escola de software - Autorizador - Lambda refresh token
+Parameters:
+  Environment:
+    Description: Environment
+    Type: String
+  TokenTableName:
+    Description: Token table name
+    Type: String
+
+Resources:  
+  AutorizadorLambdaRefreshTokenFn:
+    Type: AWS::Serverless::Function
+    Properties:
+      Description: lambda refresh token
+      FunctionName: !Join ["_", [!Ref Environment, "escoladesoftware-autorizador-lambdarefreshtokenfn"]]
+      Handler: app.lambdaHandler
+      CodeUri: src/
+      Runtime: nodejs18.x
+      Timeout: 2
+      Policies:
+        - AmazonDynamoDBFullAccess
+        - AmazonSSMReadOnlyAccess
+      Environment:
+        Variables:
+          TokenTableName: !Ref TokenTableName
+    Tags: 
+      - Key: Ambiente
+        Value: !Ref Environment
+      - Key: Microservico
+        Value: Autorizador
+      - Key: Servico
+        Value: Lambda
+
+  AutorizadorLambdaRefreshTokenLogGroup: 
+    Type: AWS::Logs::LogGroup
+    Properties: 
+      LogGroupName: !Join ["", ["/aws/lambda/", !Ref Environment, "_escoladesoftware-autorizador-lambdarefreshtokenfn"]]
+      RetentionInDays: 3
+      Tags: 
+        - Key: Ambiente
+          Value: !Ref Environment
+        - Key: Microservico
+          Value: Autorizador
+        - Key: Servico
+          Value: LogGroup
