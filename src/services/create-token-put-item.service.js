@@ -1,13 +1,17 @@
 exports.createTokenPutItem = function (token) {
 
-    const treehours = Math.floor(Date.now() / 1000) + ((60 * 60) * 3);
+    const twoDays = adicionarHoras(48);
 
     return {
         "jwt_token": {
             S: token
         },
         "expiration_time": {
-            N: treehours.toString()
+            N: twoDays.toString()
         }
     }
+}
+
+function adicionarHoras(horasAdicionar) {
+    return Math.floor(Date.now() / 1000) + ((60 * 60) * horasAdicionar)
 }
