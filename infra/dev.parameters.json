@@ -1,6 +1,7 @@
 {
   "Parameters": {
     "Environment": "dev",
-    "TokenTableName": "tbes_tokens_dev"
+    "TokenTableName": "tbes_tokens_dev",
+    "TokenSecretParameterName": "/escoladesoftware/dev/tokenkey"
   }
 }

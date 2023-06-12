@@ -1,6 +1,7 @@
 {
   "Parameters": {
     "Environment": "prod",
-    "TokenTableName": "tbes_tokens"
+    "TokenTableName": "tbes_tokens",
+    "TokenSecretParameterName": "/escoladesoftware/prod/tokenkey"
   }
 }
