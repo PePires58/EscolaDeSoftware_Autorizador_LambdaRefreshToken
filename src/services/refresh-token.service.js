@@ -13,5 +13,8 @@ exports.refreshToken = function (token, privateKey) {
     delete tokenInformations.nbf;
     delete tokenInformations.jti;
 
+    console.log('token antigo');
+    console.log(tokenInformations);
+
     return createTokenService.createToken(tokenInformations, privateKey);
 }

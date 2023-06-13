@@ -23,9 +23,12 @@ exports.lambdaHandler = async (event, context) => {
         return errorResult(400, { 'Mensagem': 'Problemas ao criar um novo token' });
     }
 
+    console.log('novo token');
+    console.log(newToken);
+
     try {
         const tokenPutItem = createTokenPutItemService.createTokenPutItem(newToken);
-        putTokenItemDynamoService.putTokenOnDatabase(tokenPutItem);
+        await putTokenItemDynamoService.putTokenOnDatabase(tokenPutItem);
         return defaultResult(200, { token: newToken });
     }
     catch (error) {
