@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 
-exports.createToken = async function (user, privateKey) {
+exports.createToken = function (user, privateKey) {
 
     const token = jwt.sign(user, privateKey.Parameter.Value, {
         expiresIn: '2 days',

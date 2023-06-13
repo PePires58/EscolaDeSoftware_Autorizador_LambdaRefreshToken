@@ -3,18 +3,24 @@ const createTokenService = require('./create-token.service');
 
 exports.refreshToken = function (token, privateKey) {
 
-    const tokenInformations = jwt.verify(token, privateKey.Parameter.Value, {
+    let tokenInformations = jwt.verify(token, privateKey.Parameter.Value, {
         issuer: 'escoladesoftware',
         audience: 'escoladesoftware'
     });
 
-    delete tokenInformations.iat;
-    delete tokenInformations.exp;
-    delete tokenInformations.nbf;
-    delete tokenInformations.jti;
-
-    console.log('token antigo');
-    console.log(tokenInformations);
+    tokenInformations = deleteTokenProperties(tokenInformations);
 
     return createTokenService.createToken(tokenInformations, privateKey);
+}
+
+function deleteTokenProperties(token) {
+    delete token.iat;
+    delete token.exp;
+    delete token.nbf;
+    delete token.jti;
+    delete token.aud;
+    delete token.iss;
+    delete token.sub;
+
+    return token;
 }
