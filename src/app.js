@@ -14,7 +14,7 @@ exports.lambdaHandler = async (event, context) => {
 
     const privateKeyParameter = await getTokenSecretService.getTokenSecret();
 
-    let newToken = '';
+    let newToken = new ResultToken();
     try {
         newToken = refreshToken.refreshToken(bodyJson.authorizationToken, privateKeyParameter);
     }
@@ -23,13 +23,12 @@ exports.lambdaHandler = async (event, context) => {
         return errorResult(400, { 'Mensagem': 'Problemas ao criar um novo token' });
     }
 
-    console.log('novo token');
-    console.log(newToken);
-
     try {
         const tokenPutItem = createTokenPutItemService.createTokenPutItem(newToken);
         await putTokenItemDynamoService.putTokenOnDatabase(tokenPutItem);
-        return defaultResult(200, { token: newToken });
+
+        newToken.expiresIn = tokenPutItem.expiration_time.N;
+        return defaultResult(200, { token: newToken.newToken, expiresIn: newToken.expiresIn });
     }
     catch (error) {
         console.log(error);
