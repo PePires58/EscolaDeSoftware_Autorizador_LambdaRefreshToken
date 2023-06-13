@@ -14,7 +14,7 @@ exports.lambdaHandler = async (event, context) => {
 
     const privateKeyParameter = await getTokenSecretService.getTokenSecret();
 
-    let newToken = new ResultToken();
+    let newToken = '';
     try {
         newToken = refreshToken.refreshToken(bodyJson.authorizationToken, privateKeyParameter);
     }
@@ -27,8 +27,10 @@ exports.lambdaHandler = async (event, context) => {
         const tokenPutItem = createTokenPutItemService.createTokenPutItem(newToken);
         await putTokenItemDynamoService.putTokenOnDatabase(tokenPutItem);
 
-        newToken.expiresIn = tokenPutItem.expiration_time.N;
-        return defaultResult(200, { token: newToken.newToken, expiresIn: newToken.expiresIn });
+        return defaultResult(200, {
+            token: newToken,
+            expiresIn: tokenPutItem.expiration_time.N
+        });
     }
     catch (error) {
         console.log(error);
