@@ -16,7 +16,7 @@ exports.lambdaHandler = async (event, context) => {
 
     let newToken = '';
     try {
-        newToken = refreshToken.refreshToken(bodyJson.authorizationToken, privateKeyParameter);
+        newToken = refreshToken.refreshToken(bodyJson.token, privateKeyParameter);
     }
     catch (error) {
         console.log(error);

@@ -5,7 +5,7 @@ exports.validateTokenInputService = function (tokenInput) {
         errors.push('Objeto de token é obrigatório');
     }
     else {
-        if (!tokenInput.authorizationToken)
+        if (!tokenInput.token)
             errors.push('Token de autorização é obrigatório');
     }
 

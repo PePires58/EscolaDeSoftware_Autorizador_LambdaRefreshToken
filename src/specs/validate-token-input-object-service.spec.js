@@ -12,7 +12,7 @@ describe('Validate token input object service tests', function () {
 
     it('Should have an error "Token de autorização é obrigatório"', function () {
         const tokenObjectInput = {
-            authorizationToken: ''
+            token: ''
         }
 
         const errors = validateTokenInputObjectService.validateTokenInputService(tokenObjectInput);
@@ -23,7 +23,7 @@ describe('Validate token input object service tests', function () {
 
     it('Should not have errors', function () {
         const tokenObjectInput = {
-            authorizationToken: ' [token]'
+            token: ' [token]'
         }
 
         const errors = validateTokenInputObjectService.validateTokenInputService(tokenObjectInput);
