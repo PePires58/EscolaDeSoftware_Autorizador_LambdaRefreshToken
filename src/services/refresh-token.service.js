@@ -12,7 +12,7 @@ exports.refreshToken = function (token = '', privateKey = '') {
         expiresIn: '2 days',
         issuer: 'escoladesoftware',
         notBefore: '120ms',
-        subject: user.email + '-escoladesoftware-user-token',
+        subject: tokenInformations.email + '-escoladesoftware-user-token',
         audience: 'escoladesoftware',
     });
 }
