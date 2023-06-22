@@ -1,26 +1,18 @@
-const jwt = require('jsonwebtoken');
-const createTokenService = require('./create-token.service');
+const esAutorizadorPkg = require('escoladesoftware-autorizador-package');
 
-exports.refreshToken = function (token, privateKey) {
+exports.refreshToken = function (token = '', privateKey = '') {
 
-    let tokenInformations = jwt.verify(token, privateKey.Parameter.Value, {
+    let tokenInformations = esAutorizadorPkg.validaToken(token, privateKey,
+        {
+            issuer: 'escoladesoftware',
+            audience: 'escoladesoftware'
+        });
+
+    return esAutorizadorPkg.criaToken(tokenInformations, privateKey, {
+        expiresIn: '2 days',
         issuer: 'escoladesoftware',
-        audience: 'escoladesoftware'
+        notBefore: '120ms',
+        subject: user.email + '-escoladesoftware-user-token',
+        audience: 'escoladesoftware',
     });
-
-    tokenInformations = deleteTokenProperties(tokenInformations);
-
-    return createTokenService.createToken(tokenInformations, privateKey);
-}
-
-function deleteTokenProperties(token) {
-    delete token.iat;
-    delete token.exp;
-    delete token.nbf;
-    delete token.jti;
-    delete token.aud;
-    delete token.iss;
-    delete token.sub;
-
-    return token;
 }

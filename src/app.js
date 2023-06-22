@@ -1,8 +1,9 @@
 const validateTokenInputService = require('./services/validate-token-input-object.service');
 const refreshToken = require('./services/refresh-token.service');
-const getTokenSecretService = require('./services/get-token-secret.service');
 const createTokenPutItemService = require('./services/create-token-put-item.service');
 const putTokenItemDynamoService = require('./services/put-token-item-dynamodb.service');
+
+const esAutorizadorPkg = require('escoladesoftware-autorizador-package');
 
 exports.lambdaHandler = async (event, context) => {
 
@@ -12,11 +13,13 @@ exports.lambdaHandler = async (event, context) => {
     if (errors.length > 0)
         return errorResult(400, errors);
 
-    const privateKeyParameter = await getTokenSecretService.getTokenSecret();
+    const privateKeyParameter = await esAutorizadorPkg.tokenSecret(process.env.TokenSecretParameterName,
+        false);
 
     let newToken = '';
     try {
-        newToken = refreshToken.refreshToken(bodyJson.token, privateKeyParameter);
+        newToken = refreshToken.refreshToken(bodyJson.token,
+            privateKeyParameter.Parameter.Value);
     }
     catch (error) {
         console.log(error);
