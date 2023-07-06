@@ -21,7 +21,7 @@ Resources:
       Handler: app.lambdaHandler
       CodeUri: src/
       Runtime: nodejs18.x
-      Timeout: 2
+      Timeout: 3
       Policies:
         - AmazonDynamoDBFullAccess
         - AmazonSSMReadOnlyAccess
@@ -36,7 +36,7 @@ Resources:
         Value: Autorizador
       - Key: Servico
         Value: Lambda
-     Metadata:
+    Metadata:
       BuildMethod: esbuild
       BuildProperties:
         Minify: true
