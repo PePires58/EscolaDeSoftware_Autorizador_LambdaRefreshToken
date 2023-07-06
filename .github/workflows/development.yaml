@@ -6,10 +6,11 @@ on:
 jobs:
 
   Deploy-lambda:
-    uses: PePires58/ReusableWorkflows/.github/workflows/001_nodejs_deploy_pipeline.yaml@main
+    uses: PePires58/ReusableWorkflows/.github/workflows/005_typescript_deploy_pipeline.yaml@main
     with: 
       stack-name: "dev-escoladesoftware-autorizador-lambdarefreshtokenfn-fn"
-      parameters-file-path: "infra/dev.parameters.json"
+      parameters-file-path: "infra/dev.parameters.txt"
+      build-js-directory: "node_modules"
     secrets:
       AWS_BUCKET_DEPLOY: ${{ secrets.AWS_BUCKET_DEPLOY }}
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
