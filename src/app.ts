@@ -1,7 +1,8 @@
+import { Usuario } from 'escoladesoftware-autorizador-package-ts/lib/models/usuario';
 import { DynamoDbService } from './services/dynamodb';
 
 
-import { BuscaSegredoParameterStore, RefreshToken } from 'escoladesoftware-autorizador-package-ts';
+import { BuscaSegredoParameterStore, RefreshToken, ValidaToken } from 'escoladesoftware-autorizador-package-ts';
 import { Erro } from './models/erro';
 
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda/trigger/api-gateway-proxy';
@@ -16,11 +17,17 @@ export const lambdaHandler = async (event: APIGatewayProxyEvent): Promise<APIGat
             false);
     try {
 
+        const objetoUsuario = new ValidaToken().ValidarToken(token, secret, {
+            issuer: 'escoladesoftware',
+            audience: 'escoladesoftware',
+        }) as Usuario;
+
         const tokenAtualizado = new RefreshToken().RefreshToken(token, secret, {
             expiresIn: '2 days',
             issuer: 'escoladesoftware',
             notBefore: '120ms',
             audience: 'escoladesoftware',
+            subject: `${objetoUsuario.email}-escoladesoftware-user-token`
         });
 
         const tokenRetorno = await new DynamoDbService().AdicionarToken(tokenAtualizado);
