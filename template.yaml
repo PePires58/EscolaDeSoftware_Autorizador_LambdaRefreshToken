@@ -22,6 +22,7 @@ Resources:
       CodeUri: src/
       Runtime: nodejs18.x
       Timeout: 3
+      MemorySize: 256
       Policies:
         - AmazonDynamoDBFullAccess
         - AmazonSSMReadOnlyAccess
